@@ -1,28 +1,6 @@
-(function () {
-    var app = angular.module('Angello', []);
-
-    app.controller('MainCtrl', function (AngelloModel) {
-        var main = this;
-
-        main.stories = AngelloModel.getStories();
-
-        main.numOfNewStories = 0;
-
-        main.createStory = function () {
-            main.stories.push({
-                title: 'New Story' + (main.numOfNewStories > 0 ? "(" + main.numOfNewStories + ")" : ""),
-                description: 'Description pending.',
-                criteria: 'Criteria pending.',
-                status: 'Back Log',
-                type: 'Feature',
-                reporter: 'Pending',
-                assignee: 'Pending'
-            });
-            ++main.numOfNewStories;
-        };
-    });
-
-    app.service('AngelloModel', function () {
+angular
+    .module('Angello.Storyboard')
+    .service('AngelloModel', function () {
         var service = this,
             stories = [{
                 title: 'First story',
@@ -53,14 +31,24 @@
         service.getStories = function () {
             return stories;
         };
-    });
+    })
+    .controller('StoryboardCtrl', function (AngelloModel) {
+        var vm = this;
 
-    app.directive('story', function () {
-        return {
-            restrict: 'E',
-            scope: true,
-            replace: true,
-            template: '<div><h4>{{story.title}}</h4><p>{{story.description}}</p></div>'
+        vm.stories = AngelloModel.getStories();
+
+        vm.numOfNewStories = 0;
+
+        vm.createStory = function () {
+            vm.stories.push({
+                title: 'New Story' + (vm.numOfNewStories > 0 ? "(" + vm.numOfNewStories + ")" : ""),
+                description: 'Description pending.',
+                criteria: 'Criteria pending.',
+                status: 'Back Log',
+                type: 'Feature',
+                reporter: 'Pending',
+                assignee: 'Pending'
+            });
+            ++vm.numOfNewStories;
         };
     });
-})();
