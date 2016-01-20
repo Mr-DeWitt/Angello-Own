@@ -1,5 +1,6 @@
 var myModule = angular.module('Angello', [
     'ngRoute',
+    'Angello.Common',
     'Angello.Storyboard'
 ]);
 
