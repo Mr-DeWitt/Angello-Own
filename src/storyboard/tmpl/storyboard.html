@@ -1,11 +1,21 @@
-<div class="col-md-4">
-    <h2>Stories</h2>
-
-    <story class="callout"
-           ng-repeat="story in storyboard.stories">
-    </story>
-
-    <a class="btn btn-primary" ng-click="storyboard.createStory()">
-        <span class="glyphicon glyphicon-plus"></span>
-    </a>
+<div class="list-area">
+    <div class="list-wrapper">
+        <ul class="list" ng-repeat="status in ::storyboard.statuses">
+            <h3 class="status">{{::status.name}}</h3>
+            <hr/>
+            <li class="story" ng-repeat="story in storyboard.stories
+            | filter: {status:status.name}">
+                <article>
+                    <div>
+                        <button type="button" class="close">x</button>
+                        <p class="title">{{story.title}}</p>
+                    </div>
+                    <div class="type-bar {{story.type}}"></div>
+                    <div class="title">
+                        <p>{{story.description}}</p>
+                    </div>
+                </article>
+            </li>
+        </ul>
+    </div>
 </div>

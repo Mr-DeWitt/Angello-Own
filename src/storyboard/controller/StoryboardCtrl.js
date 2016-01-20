@@ -26,16 +26,28 @@ angular
                 type: 'Enhancement',
                 reporter: 'Lukas Ruebbelke',
                 assignee: 'Brian Ford'
-            }];
+            }],
+            statuses = [
+                {name: 'To Do'},
+                {name: 'In Progress'},
+                {name: 'Code Review'},
+                {name: 'QA Review'},
+                {name: 'Verified'}
+            ];
 
         service.getStories = function () {
             return stories;
+        };
+
+        service.getStatuses = function () {
+            return statuses;
         };
     })
     .controller('StoryboardCtrl', function (AngelloModel) {
         var vm = this;
 
         vm.stories = AngelloModel.getStories();
+        vm.statuses = AngelloModel.getStatuses();
 
         vm.numOfNewStories = 0;
 
