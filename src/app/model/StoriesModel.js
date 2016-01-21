@@ -1,35 +1,8 @@
 angular
     .module('Angello.Common')
-    .service('StoriesModel', function () {
+    .service('StoriesModel', ['$http', 'EndpointConfigService', 'UtilsService', function ($http, EndpointConfigService, UtilsService) {
         var service = this,
-            stories = [{
-                id: 1,
-                title: 'First story',
-                description: 'Our first story.',
-                criteria: 'Criteria pending.',
-                status: 'To Do',
-                type: 'Feature',
-                reporter: 1,
-                assignee: 2
-            }, {
-                id: 2,
-                title: 'Second story',
-                description: 'Do something.',
-                criteria: 'Criteria pending.',
-                status: 'Back Log',
-                type: 'Feature',
-                reporter: 1,
-                assignee: 2
-            }, {
-                id: 3,
-                title: 'Another story',
-                description: 'Just one more.',
-                criteria: 'Criteria pending.',
-                status: 'Code Review',
-                type: 'Enhancement',
-                reporter: 1,
-                assignee: 2
-            }],
+            MODEL = '/stories/',
             statuses = [
                 {name: 'To Do'},
                 {name: 'In Progress'},
@@ -42,9 +15,15 @@ angular
                 {name: 'Enhancement'}
             ];
 
-
         service.getStories = function () {
-            return stories;
+            return $http.get(EndpointConfigService.getUrlWithFormat(MODEL))
+                .then(function (result) {
+                    return UtilsService.objectToArray(result);
+                });
+        };
+
+        service.update = function (storyId, story) {
+            return $http.put(EndpointConfigService.getUrlForId(MODEL, storyId), story);
         };
 
         service.getStatuses = function () {
@@ -54,4 +33,4 @@ angular
         service.getTypes = function () {
             return types;
         }
-    });
+    }]);

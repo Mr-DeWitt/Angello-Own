@@ -3,6 +3,8 @@ head.load(
     {file: 'vendor/angular-route.min.js'},
     {file: 'vendor/sugar.min.js'},
     {file: 'src/app/App.js'},
+    {file: 'src/app/service/EndpointConfigService.js'},
+    {file: 'src/app/service/UtilsService.js'},
     {file: 'src/app/model/StoriesModel.js'},
     {file: 'src/app/model/UsersModel.js'},
     {file: 'src/app/model/IdModel.js'},

@@ -1,15 +1,24 @@
 angular
     .module('Angello.Storyboard')
-    .controller('StoryboardCtrl', function (StoriesModel, UsersModel, IdModel) {
+    .controller('StoryboardCtrl', function (StoriesModel, UsersModel, IdModel, $log) {
         var vm = this;
 
-        vm.stories = StoriesModel.getStories();
         vm.statuses = StoriesModel.getStatuses();
         vm.types = StoriesModel.getTypes();
         vm.users = UsersModel.getUsers();
 
         vm.currentStory = null;
         vm.editedStory = {};
+
+        function getStories() {
+            StoriesModel.getStories()
+                .then(function (result) {
+                    vm.stories = (result !== 'null') ? result : {};
+                    $log.debug('RESULT: ' + result);
+                }, function (reason) {
+                    $log.debug('REASON: ' + reason);
+                });
+        }
 
         vm.createStory = function () {
             var newStory = angular.copy(vm.editedStory);
@@ -36,7 +45,14 @@ angular
                 vm.currentStory[field] = vm.editedStory[field];
             });
 
-            resetForm();
+            StoriesModel.update(vm.editedStory.id, vm.editedStory)
+                .then(function (result) {
+                    getStories();
+                    resetForm();
+                    console.log('RESULT: ' + result);
+                }, function (reason) {
+                    console.log('REASON: ' + reason);
+                });
         };
 
         vm.deleteStory = function (storyToDelete) {
@@ -54,4 +70,6 @@ angular
             vm.detailsForm.$setPristine();
             vm.detailsForm.$setUntouched();
         }
+
+        getStories();
     });
