@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="assets/css/normalize.css">
     <link rel="stylesheet" href="assets/css/angello.css">
 </head>
-<body>
+<body ng-class="{loading:loadingView}">
 
 <div class="navbar navbar-fixed-top navbar-default">
     <div class="navbar-header pull-left">
@@ -21,6 +21,8 @@
 </div>
 
 <div data-ng-view=""></div>
+
+<div class="modal"></div>
 
 <script src="vendor/head.load.min.js"></script>
 <script src="assets/js/boot.js"></script>

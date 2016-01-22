@@ -26,6 +26,14 @@ angular
             return $http.put(EndpointConfigService.getUrlForId(MODEL, storyId), story);
         };
 
+        service.create = function (newStory) {
+            return $http.post(EndpointConfigService.getUrlWithFormat(MODEL), newStory);
+        };
+
+        service.delete = function (storyId) {
+            return $http.delete(EndpointConfigService.getUrlForId(MODEL, storyId));
+        };
+
         service.getStatuses = function () {
             return statuses;
         };

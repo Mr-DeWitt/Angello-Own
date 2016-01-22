@@ -1,6 +1,6 @@
 angular
     .module('Angello.Storyboard')
-    .controller('StoryboardCtrl', function (StoriesModel, UsersModel, IdModel, $log) {
+    .controller('StoryboardCtrl', function (StoriesModel, UsersModel, $log) {
         var vm = this;
 
         vm.statuses = StoriesModel.getStatuses();
@@ -14,16 +14,21 @@ angular
             StoriesModel.getStories()
                 .then(function (result) {
                     vm.stories = (result !== 'null') ? result : {};
-                    $log.debug('RESULT: ' + result);
+                    $log.debug('RESULT: ', result);
                 }, function (reason) {
-                    $log.debug('REASON: ' + reason);
+                    $log.debug('REASON: ', reason);
                 });
         }
 
         vm.createStory = function () {
-            var newStory = angular.copy(vm.editedStory);
-            newStory.id = IdModel.getId();
-            vm.stories.push(newStory);
+            StoriesModel.create(vm.editedStory)
+                .then(function (result) {
+                    getStories();
+                    resetForm();
+                    $log.debug('RESULT: ', result);
+                }, function (reason) {
+                    $log.debug('REASON: ', reason);
+                });
 
             resetForm();
         };
@@ -56,11 +61,14 @@ angular
         };
 
         vm.deleteStory = function (storyToDelete) {
-            vm.stories.remove(function (story) {
-                return story === storyToDelete;
-            });
-
-            resetForm();
+            StoriesModel.delete(storyToDelete.id)
+                .then(function (result) {
+                    getStories();
+                    resetForm();
+                    $log.debug('RESULT: ', result);
+                }, function (reason) {
+                    $log.debug('RESON: ', reason);
+                });
         };
 
         function resetForm() {
