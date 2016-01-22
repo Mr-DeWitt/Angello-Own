@@ -10,7 +10,6 @@ angular.module('Angello.Common')
 
                 for (var key in content.data) {
                     var item = content.data[key];
-                    if (!item) continue;
                     item.id = key;
                     newArray.push(item);
                 }

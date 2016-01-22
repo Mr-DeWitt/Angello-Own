@@ -3,13 +3,13 @@
         <ul class="list" ng-repeat="status in ::storyboard.statuses">
             <h3 class="status">{{::status.name}}</h3>
             <hr/>
-            <li class="story"
+            <li data-user-story class="story"
                 ng-repeat="story in storyboard.stories | filter: {status:status.name}"
                 ng-click="storyboard.selectStory(story)">
                 <article>
                     <div>
                         <button type="button" class="close"
-                                ng-click="storyboard.deleteStory(story)">x
+                                ng-click="userStoryDirectiveCtrl.deleteStory(story)">x
                         </button>
                         <p class="title">{{story.title}}</p>
                     </div>
