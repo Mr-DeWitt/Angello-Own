@@ -61,6 +61,20 @@ angular
                     });
             };
 
+            vm.changeStatus = function (story, status) {
+                story.status = status.name;
+            };
+
+            vm.finalizeDrop = function (story) {
+                $log.debug('ASD!!!!!!!!!!!!!!!!!!!!!!!!!!!', story);
+                StoriesModel.update(story.id, story)
+                    .then(function (result) {
+                        console.log('RESULT: ' + result);
+                    }, function (reason) {
+                        console.log('REASON: ' + reason);
+                    });
+            };
+
             function resetForm() {
                 vm.currentStory = null;
                 vm.editedStory = {};       //TODO doesn't work if there is an invalid form value

@@ -5,7 +5,12 @@
             <hr/>
             <li data-user-story class="story"
                 ng-repeat="story in storyboard.stories | filter: {status:status.name}"
+                drag-container="story" mime-type="application/x-angello-status"
+                drop-container="" accepts="['application/x-angello-status']"
+                on-drop="storyboard.finalizeDrop(data)"
                 ng-click="storyboard.selectStory(story)">
+                <div drop-target="top" style="background-color: cornflowerblue"></div>
+                <div drop-target="bottom" style="background-color: seagreen"></div>
                 <article>
                     <div>
                         <button type="button" class="close"
@@ -19,6 +24,14 @@
                     </div>
                 </article>
             </li>
+
+            <div class="emptystatus"
+                 drop-container="" accepts="['application/x-angello-status']"
+                 on-drag-enter="storyboard.changeStatus(data, status)"
+                 on-drop="storyboard.finalizeDrop(data)">
+                <!--ng-if="storyboard.isEmptyStatus(status)" TODO-->
+            </div>
+
         </ul>
     </div>
 </div>
