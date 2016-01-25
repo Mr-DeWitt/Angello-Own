@@ -1,7 +1,7 @@
 head.js(
     {file: '//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.js'},
     {file: '//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular.js'},
-    {file: '/vendor/angular-animate.js'},
+    {file: '//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-animate.min.js'},
     {file: '//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.min.js'},
     {file: '//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'},
     {file: '/vendor/sugar.min.js'},
