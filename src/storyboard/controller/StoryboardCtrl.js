@@ -66,13 +66,30 @@ angular
             };
 
             vm.finalizeDrop = function (story) {
-                $log.debug('ASD!!!!!!!!!!!!!!!!!!!!!!!!!!!', story);
                 StoriesModel.update(story.id, story)
                     .then(function (result) {
                         console.log('RESULT: ' + result);
                     }, function (reason) {
                         console.log('REASON: ' + reason);
                     });
+            };
+
+            vm.insertAdjacent = function (target, story, insertBefore) {
+                if (target === story) return;
+
+                var fromIdx = vm.stories.indexOf(story);
+                var toIdx = vm.stories.indexOf(target);
+
+                if (!insertBefore) ++toIdx;
+
+                if (toIdx >= 0 && fromIdx >= 0) {
+                    vm.stories.splice(fromIdx, 1);
+
+                    if (toIdx >= fromIdx) --toIdx;
+
+                    vm.stories.splice(toIdx, 0, story);
+                    story.status = target.status;
+                }
             };
 
             function resetForm() {

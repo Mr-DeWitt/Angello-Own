@@ -2,7 +2,8 @@ var myModule = angular.module('Angello', [
     'ngRoute',
     'Angello.Common',
     'Angello.User',
-    'Angello.Storyboard'
+    'Angello.Storyboard',
+    'Angello.Dashboard'
 ]);
 
 myModule
@@ -23,7 +24,10 @@ myModule
             templateUrl: 'src/storyboard/tmpl/storyboard.html',
             controller: 'StoryboardCtrl',
             controllerAs: 'storyboard'
+        }).when('/dashboard', {
+            templateUrl: '/src/dashboard/tmpl/dashboard.html'
         });
+
 
         $httpProvider.interceptors.push('loadingInterceptor');
 

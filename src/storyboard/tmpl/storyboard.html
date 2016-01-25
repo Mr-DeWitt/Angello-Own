@@ -9,8 +9,12 @@
                 drop-container="" accepts="['application/x-angello-status']"
                 on-drop="storyboard.finalizeDrop(data)"
                 ng-click="storyboard.selectStory(story)">
-                <div drop-target="top" style="background-color: cornflowerblue"></div>
-                <div drop-target="bottom" style="background-color: seagreen"></div>
+                <div drop-target="top"
+                     on-drag-enter="storyboard.insertAdjacent(story, data, true)"
+                     on-drop="storyboard.finalizeDrop(data)"></div>
+                <div drop-target="bottom"
+                     on-drag-enter="storyboard.insertAdjacent(story, data, false)"
+                     on-drop="storyboard.finalizeDrop(data)"></div>
                 <article>
                     <div>
                         <button type="button" class="close"

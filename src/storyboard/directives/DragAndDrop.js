@@ -32,7 +32,8 @@ angular.module('Angello.Storyboard')
             e.dataTransfer.dropEffect = 'move';
             e.dataTransfer.effectAllowed = 'move';
 
-            //vm.el.addClass('drag-container-active'); // TODO minek
+            vm.el.addClass('drag-container-active'); // TODO minek
+            e.dataTransfer.setData('text/plain', 'forFFBug');
             vm.dragging = true;
 
             $dragging.setData(vm.data);
@@ -42,6 +43,7 @@ angular.module('Angello.Storyboard')
         vm.handleDragEnd = function () {
             $log.debug('Drag end: ', this.el);
 
+            vm.el.removeClass('drag-container-active');
             vm.dragging = false;
 
             $dragging.setData(null);
@@ -124,18 +126,24 @@ angular.module('Angello.Storyboard')
         };
 
         vm.handleDragEnter = function (event) {
+            if (event.originalEvent) event = event.originalEvent;
+
             if (!vm.accepts || vm.accepts.indexOf($dragging.getType()) >= 0) {
                 event.preventDefault();
             } else {
                 return;
             }
+
+            var eventData = vm.updateDragTarget(event);
 
             if (vm.callbacks.onDragEnter) {
-                vm.callbacks.onDragEnter(vm.scope, {data: $dragging.getData()});
+                vm.callbacks.onDragEnter(vm.scope, eventData);
             }
         };
 
-        vm.handleDragOver = function () {
+        vm.handleDragOver = function (event) {
+            if (event.originalEvent) event = event.originalEvent;
+
             if (!vm.accepts || vm.accepts.indexOf($dragging.getType()) >= 0) {
                 event.preventDefault();
             } else {
@@ -143,7 +151,7 @@ angular.module('Angello.Storyboard')
             }
         };
 
-        vm.handleDragLeave = function () {
+        vm.handleDragLeave = function (eventData) {
 
         };
 
@@ -202,8 +210,46 @@ angular.module('Angello.Storyboard')
             var prevTarget = vm.activeTarget;
 
             angular.forEach(targets, function (dropTarget, anchor) {
+                var width = vm.el[0].offsetWidth;
+                var height = vm.el[0].offsetHeight;
+                var anchorX = width / 2;
+                var anchorY = height / 2;
 
+                if (anchor.indexOf('left') >= 0) anchorX = 0;
+                if (anchor.indexOf('top') >= 0) anchorY = 0;
+                if (anchor.indexOf('right') >= 0) anchorX = width;
+                if (anchor.indexOf('bottom') >= 0) anchorY = height;
+
+                var distanceSq = Math.pow(anchorX - e.offsetX, 2) + Math.pow(anchorY - e.offsetY, 2);
+
+                if (distanceSq < mindDistanceSq) {
+                    mindDistanceSq = distanceSq;
+                    activeAnchor = anchor;
+                    activeTarget = dropTarget;
+                }
             });
+
+            vm.activeAnchor = activeAnchor;
+            vm.activeTarget = activeTarget;
+
+            var eventData = {
+                $event: e,
+                data: $dragging.getData(),
+                anchor: activeAnchor,
+                target: activeTarget,
+                prevAnchor: prevAnchor,
+                prevTarget: prevTarget
+            };
+
+            if (prevTarget != activeTarget) {
+                vm.handleDragLeave(eventData);
+            }
+
+            if (activeTarget) {
+                activeTarget.handleDragEnter(eventData);
+            }
+
+            return eventData;
         };
     })
     .directive('dropTarget', function ($parse) {
@@ -239,6 +285,32 @@ angular.module('Angello.Storyboard')
             vm.el = elem;
             vm.scope = scope;
             vm.callbacks = callbacks;
+        };
+
+        vm.handleDragEnter = function (eventData) {
+            vm.el.addClass('drop-target-active'); //TODO drop-target-active minek ???
+            if (vm.callbacks.onDragEnter) {
+                vm.callbacks.onDragEnter(vm.scope, eventData);
+            }
+        };
+
+        vm.handleDragOver = function (eventData) {
+            if (vm.callbacks.onDragOver) {
+                vm.callbacks.onDragOver(vm.scope, eventData);
+            }
+        };
+
+        vm.handleDragLeave = function (eventData) {
+            vm.el.removeClass('drop-target-active');
+            if (vm.callbacks.onDragLeave) {
+                vm.callbacks.onDragLeave(vm.scope, eventData);
+            }
+        };
+
+        vm.handleDrop = function (eventData) {
+            if (vm.callbacks.onDrop) {
+                vm.callbacks.onDrop(vm.scope, eventData);
+            }
         };
     })
     .factory('$dragging', function () {
