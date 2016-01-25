@@ -86,12 +86,13 @@ body.loading .modal {
     bottom: 0;
     overflow-x: auto;
     overflow-y: hidden;
-
 }
 
 .list-wrapper {
     padding: 10px;
     display: inline-flex;
+    width: 100%;
+    justify-content: space-around;
 }
 
 .user-wrapper {

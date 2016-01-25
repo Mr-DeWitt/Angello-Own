@@ -7,6 +7,7 @@ angular
             vm.statuses = STORY_STATUSES;
             vm.types = STORY_TYPES;
             vm.users = UsersModel.getUsers();
+            vm.detailsVisible = true;
 
             vm.currentStory = null;
             vm.editedStory = {};
@@ -90,6 +91,10 @@ angular
                     vm.stories.splice(toIdx, 0, story);
                     story.status = target.status;
                 }
+            };
+
+            vm.setDetailsVisible = function (isVisible) {
+                vm.detailsVisible = isVisible;
             };
 
             function resetForm() {

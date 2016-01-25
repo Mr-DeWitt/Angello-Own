@@ -13,6 +13,4 @@ angular
         service.getUsers = function () {
             return users;
         };
-
-
     });

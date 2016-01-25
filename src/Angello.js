@@ -1,4 +1,5 @@
 var myModule = angular.module('Angello', [
+    'ngAnimate',
     'ngRoute',
     'Angello.Common',
     'Angello.User',

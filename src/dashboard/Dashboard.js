@@ -1,1 +1,1 @@
-angular.module('Angello.Dashboard', []);
+angular.module('Angello.Dashboard', ['Angello.Common']);

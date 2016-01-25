@@ -1,9 +1,10 @@
-<div class="list-area">
+<div class="list-area list-area-animation"
+     ng-class="{'list-area-expanded': !storyboard.detailsVisible}">
     <div class="list-wrapper">
-        <ul class="list" ng-repeat="status in ::storyboard.statuses">
+        <ul class="list my-repeat-animation" ng-repeat="status in ::storyboard.statuses">
             <h3 class="status">{{::status.name}}</h3>
             <hr/>
-            <li data-user-story class="story"
+            <li data-user-story class="story my-repeat-animation"
                 ng-repeat="story in storyboard.stories | filter: {status:status.name}"
                 drag-container="story" mime-type="application/x-angello-status"
                 drop-container="" accepts="['application/x-angello-status']"
@@ -40,119 +41,138 @@
     </div>
 </div>
 
-<div class="details">
-    <h3>Card Details</h3>
-
-    <form name="storyboard.detailsForm">
-        <div class="form-group">
-            <div class="controls">
-                <label class="control-label" for="inputTitle">*Title</label>
-                <input type="text" id="inputTitle" name="inputTitle"
-                       placeholder="Title"
-                       ng-model="storyboard.editedStory.title"
-                       ng-required="true"
-                       ng-minlength="3"
-                       ng-maxlength="30"
-                       class="form-control">
-            </div>
+<div class="details details-animation"
+     ng-class="{'details-visible': storyboard.detailsVisible}">
+    <div class="details-nav">
+        <div ng-if="!storyboard.detailsVisible">
+            <button class="btn pull-left btn-default"
+                    ng-click="storyboard.setDetailsVisible(true)">
+                <span class="glyphicon glyphicon-arrow-left"></span>
+            </button>
         </div>
 
-        <div class="form-group">
-            <div class="controls">
-                <label class="control-label" for="inputStatus">*Status</label>
-                <select id="inputStatus" name="inputStatus"
-                        data-ng-model="storyboard.editedStory.status"
-                        ng-options="status.name as status.name for status in storyboard.statuses"
-                        ng-required="true"
-                        class="form-control">
-                    <option value="">Please select...</option>
-                </select>
-            </div>
+        <div ng-if="storyboard.detailsVisible">
+            <button class="btn pull-right btn-default"
+                    ng-click="storyboard.setDetailsVisible(false)">
+                <span class="glyphicon glyphicon-arrow-right"></span>
+            </button>
         </div>
+    </div>
 
-        <div class="form-group">
-            <div class="controls">
-                <label class="control-label" for="inputType">*Type</label>
-                <select id="inputType" name="inputType"
-                        data-ng-model="storyboard.editedStory.type"
-                        ng-options="type.name as type.name for type in storyboard.types"
-                        ng-required="true"
-                        class="form-control">
-                    <option value="">Please select...</option>
-                </select>
+    <div ng-if="storyboard.detailsVisible" class="my-fade-animation">
+        <h3>Card Details</h3>
+
+        <form name="storyboard.detailsForm">
+            <div class="form-group">
+                <div class="controls">
+                    <label class="control-label" for="inputTitle">*Title</label>
+                    <input type="text" id="inputTitle" name="inputTitle"
+                           placeholder="Title"
+                           ng-model="storyboard.editedStory.title"
+                           ng-required="true"
+                           ng-minlength="3"
+                           ng-maxlength="30"
+                           class="form-control">
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="controls">
-                <label class="control-label" for="inputDescription">Description</label>
+            <div class="form-group">
+                <div class="controls">
+                    <label class="control-label" for="inputStatus">*Status</label>
+                    <select id="inputStatus" name="inputStatus"
+                            data-ng-model="storyboard.editedStory.status"
+                            ng-options="status.name as status.name for status in storyboard.statuses"
+                            ng-required="true"
+                            class="form-control">
+                        <option value="">Please select...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="controls">
+                    <label class="control-label" for="inputType">*Type</label>
+                    <select id="inputType" name="inputType"
+                            data-ng-model="storyboard.editedStory.type"
+                            ng-options="type.name as type.name for type in storyboard.types"
+                            ng-required="true"
+                            class="form-control">
+                        <option value="">Please select...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="controls">
+                    <label class="control-label" for="inputDescription">Description</label>
                 <textarea id="inputDescription" name="inputDescription"
                           placeholder="Description"
                           rows="4"
                           data-ng-model="storyboard.editedStory.description"
                           ng-maxlength="255"
                           class="form-control"></textarea>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="controls">
-                <label class="control-label" for="inputCriteria">Acceptance Criteria</label>
+            <div class="form-group">
+                <div class="controls">
+                    <label class="control-label" for="inputCriteria">Acceptance Criteria</label>
                 <textarea id="inputCriteria" name="inputCriteria"
                           placeholder="Criteria"
                           rows="4"
                           data-ng-model="storyboard.editedStory.criteria"
                           ng-maxlength="255"
                           class="form-control"></textarea>
+                </div>
             </div>
+
+            <div class="form-group">
+                <div class="controls">
+                    <label class="control-label" for="inputReporter">*Reporter</label>
+                    <select id="inputReporter" name="inputReporter"
+                            data-ng-model="storyboard.editedStory.reporter"
+                            ng-options="user.id as user.name for user in storyboard.users"
+                            ng-required="true"
+                            class="form-control">
+                        <option value="">Please select...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="controls">
+                    <label class="control-label" for="inputAssignee">*Assignee</label>
+                    <select id="inputAssignee" name="inputAssignee"
+                            data-ng-model="storyboard.editedStory.assignee"
+                            ng-options="user.id as user.name for user in storyboard.users"
+                            ng-required="true"
+                            class="form-control">
+                        <option value="">Please select...</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <hr/>
+
+        <div ng-if="storyboard.currentStory">
+            <button class="btn btn-default"
+                    ng-click="storyboard.cancelUpdate()">Cancel
+            </button>
+            <button class="btn pull-right btn-default"
+                    data-ng-disabled="!storyboard.detailsForm.$valid"
+                    ng-click="storyboard.updateStory()">Update Story
+            </button>
         </div>
 
-        <div class="form-group">
-            <div class="controls">
-                <label class="control-label" for="inputReporter">*Reporter</label>
-                <select id="inputReporter" name="inputReporter"
-                        data-ng-model="storyboard.editedStory.reporter"
-                        ng-options="user.id as user.name for user in storyboard.users"
-                        ng-required="true"
-                        class="form-control">
-                    <option value="">Please select...</option>
-                </select>
-            </div>
+        <div ng-if="!storyboard.currentStory">
+            <button class="btn btn-default"
+                    ng-click="storyboard.cancelUpdate()">Cancel
+            </button>
+            <button class="btn pull-right btn-default"
+                    data-ng-disabled="!storyboard.detailsForm.$valid"
+                    ng-click="storyboard.createStory()">Create Story
+            </button>
         </div>
-
-        <div class="form-group">
-            <div class="controls">
-                <label class="control-label" for="inputAssignee">*Assignee</label>
-                <select id="inputAssignee" name="inputAssignee"
-                        data-ng-model="storyboard.editedStory.assignee"
-                        ng-options="user.id as user.name for user in storyboard.users"
-                        ng-required="true"
-                        class="form-control">
-                    <option value="">Please select...</option>
-                </select>
-            </div>
-        </div>
-    </form>
-
-    <hr/>
-
-    <div ng-if="storyboard.currentStory">
-        <button class="btn btn-default"
-                ng-click="storyboard.cancelUpdate()">Cancel
-        </button>
-        <button class="btn pull-right btn-default"
-                data-ng-disabled="!storyboard.detailsForm.$valid"
-                ng-click="storyboard.updateStory()">Update Story
-        </button>
-    </div>
-
-    <div ng-if="!storyboard.currentStory">
-        <button class="btn btn-default"
-                ng-click="storyboard.cancelUpdate()">Cancel
-        </button>
-        <button class="btn pull-right btn-default"
-                data-ng-disabled="!storyboard.detailsForm.$valid"
-                ng-click="storyboard.createStory()">Create Story
-        </button>
     </div>
 </div>

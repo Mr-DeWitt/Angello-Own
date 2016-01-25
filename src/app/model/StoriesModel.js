@@ -23,7 +23,7 @@ angular
             return $http.delete(EndpointConfigService.getUrlForId(MODEL, storyId));
         };
     }])
-    .value('STORY_STATUSES', [
+    .constant('STORY_STATUSES', [
         {name: 'To Do'},
         {name: 'In Progress'},
         {name: 'Code Review'},
