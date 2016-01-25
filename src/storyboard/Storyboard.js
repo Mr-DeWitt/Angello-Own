@@ -1,2 +1,2 @@
-angular.module('Angello.Storyboard', []);
+angular.module('Angello.Storyboard', ['Angello.Common']);
 

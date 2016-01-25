@@ -25,7 +25,9 @@ myModule
             controller: 'StoryboardCtrl',
             controllerAs: 'storyboard'
         }).when('/dashboard', {
-            templateUrl: '/src/dashboard/tmpl/dashboard.html'
+            templateUrl: '/src/dashboard/tmpl/dashboard.html',
+            controller: 'DashboardCtrl',
+            controllerAs: 'dashboard'
         });
 
 

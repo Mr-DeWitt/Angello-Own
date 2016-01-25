@@ -1,11 +1,11 @@
 angular
     .module('Angello.Storyboard')
-    .controller('StoryboardCtrl', ['$scope', 'StoriesModel', 'UsersModel', '$log',
-        function ($scope, StoriesModel, UsersModel, $log) {
+    .controller('StoryboardCtrl', ['$scope', 'StoriesModel', 'UsersModel', '$log', 'STORY_STATUSES', 'STORY_TYPES',
+        function ($scope, StoriesModel, UsersModel, $log, STORY_STATUSES, STORY_TYPES) {
             var vm = this;
 
-            vm.statuses = StoriesModel.getStatuses();
-            vm.types = StoriesModel.getTypes();
+            vm.statuses = STORY_STATUSES;
+            vm.types = STORY_TYPES;
             vm.users = UsersModel.getUsers();
 
             vm.currentStory = null;

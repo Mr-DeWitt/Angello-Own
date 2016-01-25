@@ -2,18 +2,7 @@ angular
     .module('Angello.Common')
     .service('StoriesModel', ['$http', 'EndpointConfigService', 'UtilsService', function ($http, EndpointConfigService, UtilsService) {
         var service = this,
-            MODEL = '/stories/',
-            statuses = [
-                {name: 'To Do'},
-                {name: 'In Progress'},
-                {name: 'Code Review'},
-                {name: 'QA Review'},
-                {name: 'Verified'}
-            ],
-            types = [
-                {name: 'Feature'},
-                {name: 'Enhancement'}
-            ];
+            MODEL = '/stories/';
 
         service.getStories = function () {
             return $http.get(EndpointConfigService.getUrlWithFormat(MODEL))
@@ -33,12 +22,15 @@ angular
         service.delete = function (storyId) {
             return $http.delete(EndpointConfigService.getUrlForId(MODEL, storyId));
         };
-
-        service.getStatuses = function () {
-            return statuses;
-        };
-
-        service.getTypes = function () {
-            return types;
-        }
-    }]);
+    }])
+    .value('STORY_STATUSES', [
+        {name: 'To Do'},
+        {name: 'In Progress'},
+        {name: 'Code Review'},
+        {name: 'QA Review'},
+        {name: 'Verified'}
+    ])
+    .constant('STORY_TYPES', [
+        {name: 'Feature'},
+        {name: 'Enhancement'}
+    ]);

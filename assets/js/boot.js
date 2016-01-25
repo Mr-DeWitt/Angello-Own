@@ -22,6 +22,7 @@ head.js(
     {file: '/src/storyboard/controller/StoryboardCtrl.js'},
 
     {apps: '/src/dashboard/Dashboard.js'},
+    {apps: '/src/dashboard/controller/DashboardController.js'},
     {file: '/src/dashboard/directive/ChartDirective.js'},
 
     {file: '/src/Angello.js'}
