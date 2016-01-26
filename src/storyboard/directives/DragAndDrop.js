@@ -33,7 +33,7 @@ angular.module('Angello.Storyboard')
             e.dataTransfer.effectAllowed = 'move';
 
             vm.el.addClass('drag-container-active'); // TODO minek
-            e.dataTransfer.setData('text/plain', 'forFFBug');
+            e.dataTransfer.setData('text', 'forFFBug');
             vm.dragging = true;
 
             $dragging.setData(vm.data);

@@ -2,13 +2,6 @@ angular.module('Angello.User')
     .directive('userStory', ['StoriesModel', '$rootScope', '$log',
         function (StoriesModel, $rootScope, $log) {
             var linker = function (scope, element, attrs) {
-                //element
-                //    .mouseover(function(){
-                //        element.css({'opacity': 0.1});
-                //    })
-                //    .mouseout(function(){
-                //        element.css({'opacity': 1.0});
-                //    });
             };
 
             var controller = function () {

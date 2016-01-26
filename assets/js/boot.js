@@ -3,6 +3,7 @@ $LAB
     .script('//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular.js')
     .script('//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-animate.min.js')
     .script('//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.min.js')
+    .script('//cdnjs.cloudflare.com/ajax/libs/angular-messages/1.4.9/angular-messages.min.js')
     .script('//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js')
     .script('/vendor/sugar.min.js')
     .script('/vendor/flot/jquery.flot.min.js')

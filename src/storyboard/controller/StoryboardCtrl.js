@@ -97,6 +97,11 @@ angular
                 vm.detailsVisible = isVisible;
             };
 
+            vm.showErrorMessages = function (field) {
+                return vm.detailsForm[field].$touched
+                    && vm.detailsForm[field].$invalid;
+            };
+
             function resetForm() {
                 vm.currentStory = null;
                 vm.editedStory = {};       //TODO doesn't work if there is an invalid form value

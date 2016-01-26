@@ -8,12 +8,6 @@ angular.module('Angello.Dashboard')
         StoriesModel.getStories()
             .then(function (result) {
                 $log.debug('RESULT: ', result);
-                //var arr = [];
-                //
-                //for(var key in result){
-                //    arr.push(result[key]);
-                //}
-                //vm.stories = arr;
                 vm.stories = result;
             }, function (reason) {
                 $log.debug('REASON: ', reason);
